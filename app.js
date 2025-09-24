@@ -128,7 +128,7 @@ function currentCat(){ var c=$('move_cat').value; if(c==='auto'){ var a=+$('atk_
     sideA['base_'+k]=$('atk_base_'+k); sideA['iv_'+k]=$('atk_iv_'+k); sideA['ev_'+k]=$('atk_ev_'+k); sideA['mul_'+k']=$('atk_mul_'+k); sideA['fin_'+k]=$('atk_fin_'+k);
     sideD['base_'+k]=$('def_base_'+k); sideD['iv_'+k]=$('def_iv_'+k); sideD['ev_'+k]=$('def_ev_'+k); sideD['mul_'+k']=$('def_mul_'+k); sideD['fin_'+k']=$('def_fin_'+k);
   }
-  function findMon(n){ if(!n) return null; n=String(n).trim(); for (var i=0;i<(DEX||[]).length;i++){ var p=DEX[i]; if (p && (p.名字===n || p.名前===n || String(p.No)===n)) return p; } return null; }
+  function findMon(n){ if(!n) return null; n=String(n).trim(); for (var i=0;i<(DEX||[]).length;i++){ var p=DEX[i]; if (p && (p.名前===n || p.名前===n || String(p.No)===n)) return p; } return null; }
   function fillBase(side, mon){ for (var i=0;i<keys.length;i++){ var k=keys[i]; var b=mon?(+mon[k]||50):50; side['base_'+k].textContent=b; } }
   function recalc(side){
     side['fin_HP'].textContent=HP(+side['base_HP'].textContent,+side['iv_HP'].value,+side['ev_HP'].value);
@@ -172,7 +172,7 @@ function currentCat(){ var c=$('move_cat').value; if(c==='auto'){ var a=+$('atk_
       for (var i=0;i<MOVES.length;i++){ if ((MOVES[i][keyName]||'')===q){ row=MOVES[i]; break; } }
       if (!row){ hint.textContent=''; critBadge.style.display='none'; return; }
 
-      if (row[keyPow] and not isNaN(+row[keyPow])) movePower.value=+row[keyPow];
+      if (row[keyPow] && ! isNaN(+row[keyPow])) movePower.value=+row[keyPow];
       if (row[keyType]) moveType.value=row[keyType];
 
       var cat=normalizeCat(row[keyCat]);
@@ -260,7 +260,7 @@ function currentCat(){ var c=$('move_cat').value; if(c==='auto'){ var a=+$('atk_
   $('log_import_btn')&&$('log_import_btn').addEventListener('click', function(){
     var f=$('log_import_file').files[0]; if(!f) return;
     var fr=new FileReader();
-    fr.onload=function(){ var t=String(fr.result||''); if (f.name.toLowerCase().endswith('.csv')){ var lines=t.split(/\r?\n/); if(lines.length) lines.shift(); t=lines.join('\n'); } $('atk_logs').value=t; localStorage.setItem('calc_logs',t); };
+    fr.onload=function(){ var t=String(fr.result||''); if (f.name.toLowerCase().endsWith('.csv')){ var lines=t.split(/\r?\n/); if(lines.length) lines.shift(); t=lines.join('\n'); } $('atk_logs').value=t; localStorage.setItem('calc_logs',t); };
     fr.readAsText(f, 'utf-8');
   });
 })();
