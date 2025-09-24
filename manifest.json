@@ -1,0 +1,11 @@
+{
+  "name": "Battle Calc Suite",
+  "short_name": "CalcSuite",
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#0b1430",
+  "background_color": "#0b1430",
+  "icons": [
+    { "src": "favicon.png", "sizes": "192x192", "type": "image/png" }
+  ]
+}

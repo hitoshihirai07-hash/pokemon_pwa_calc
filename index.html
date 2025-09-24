@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Battle Calc Suite</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header id="topBar">
+  <div class="brand">Battle Calc Suite</div>
+  <div id="timerBar">
+    <input id="timerMin" type="number" min="1" max="180" value="10">分
+    <button id="timerStart">開始</button>
+    <button id="timerPause">一時停止</button>
+    <button id="timerReset">リセット</button>
+    <span id="timerView">00:00</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-tab="tab-main">ダメージ計算</button>
+  <button data-tab="tab-1v3">1対3</button>
+  <button data-tab="tab-party">パーティー</button>
+  <button data-tab="tab-builds">構築記事</button>
+  <button data-tab="tab-diary">対戦ログ</button>
+</nav>
+
+<section id="tab-main" class="tab-pane active">
+  <div class="grid two">
+    <div class="card">
+      <h2>攻撃側</h2>
+      <label>名前
+        <input id="atk_name" list="dexNames" placeholder="例: ドラパルト">
+      </label>
+      <div class="stat-table">
+        <div class="row head"><div>能力</div><div>種族</div><div>IV</div><div>EV</div><div>補正</div><div>実数</div></div>
+        <div class="row" data-s="HP"><div>HP</div><div id="atk_base_HP">50</div><input id="atk_iv_HP" type="number" min="0" max="31" value="31"><input id="atk_ev_HP" type="number" min="0" max="252" step="4" value="0"><div>-</div><div id="atk_fin_HP">0</div></div>
+        <div class="row" data-s="攻撃"><div>攻撃</div><div id="atk_base_攻撃">50</div><input id="atk_iv_攻撃" type="number" min="0" max="31" value="31"><input id="atk_ev_攻撃" type="number" min="0" max="252" step="4" value="0"><select id="atk_mul_攻撃"><option>0.9</option><option selected>1.0</option><option>1.1</option></select><div id="atk_fin_攻撃">0</div></div>
+        <div class="row" data-s="防御"><div>防御</div><div id="atk_base_防御">50</div><input id="atk_iv_防御" type="number" min="0" max="31" value="31"><input id="atk_ev_防御" type="number" min="0" max="252" step="4" value="0"><select id="atk_mul_防御"><option>0.9</option><option selected>1.0</option><option>1.1</option></select><div id="atk_fin_防御">0</div></div>
+        <div class="row" data-s="特攻"><div>特攻</div><div id="atk_base_特攻">50</div><input id="atk_iv_特攻" type="number" min="0" max="31" value="31"><input id="atk_ev_特攻" type="number" min="0" max="252" step="4" value="0"><select id="atk_mul_特攻"><option>0.9</option><option selected>1.0</option><option>1.1</option></select><div id="atk_fin_特攻">0</div></div>
+        <div class="row" data-s="特防"><div>特防</div><div id="atk_base_特防">50</div><input id="atk_iv_特防" type="number" min="0" max="31" value="31"><input id="atk_ev_特防" type="number" min="0" max="252" step="4" value="0"><select id="atk_mul_特防"><option>0.9</option><option selected>1.0</option><option>1.1</option></select><div id="atk_fin_特防">0</div></div>
+        <div class="row" data-s="素早"><div>素早</div><div id="atk_base_素早">50</div><input id="atk_iv_素早" type="number" min="0" max="31" value="31"><input id="atk_ev_素早" type="number" min="0" max="252" step="4" value="0"><select id="atk_mul_素早"><option>0.9</option><option selected>1.0</option><option>1.1</option></select><div id="atk_fin_素早">0</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>防御側</h2>
+      <label>名前
+        <input id="def_name" list="dexNames" placeholder="例: ハバタクカミ">
+      </label>
+      <div class="grid two">
+        <label>タイプ1<input id="def_t1" list="typeList"></label>
+        <label>タイプ2<input id="def_t2" list="typeList"></label>
+      </div>
+      <div class="stat-table">
+        <div class="row head"><div>能力</div><div>種族</div><div>IV</div><div>EV</div><div>補正</div><div>実数</div></div>
+        <div class="row" data-s="HP"><div>HP</div><div id="def_base_HP">50</div><input id="def_iv_HP" type="number" min="0" max="31" value="31"><input id="def_ev_HP" type="number" min="0" max="252" step="4" value="252"><div>-</div><div id="def_fin_HP">0</div></div>
+        <div class="row" data-s="防御"><div>防御</div><div id="def_base_防御">50</div><input id="def_iv_防御" type="number" min="0" max="31" value="31"><input id="def_ev_防御" type="number" min="0" max="252" step="4" value="0"><select id="def_mul_防御"><option>0.9</option><option selected>1.0</option><option>1.1</option></select><div id="def_fin_防御">0</div></div>
+        <div class="row" data-s="特防"><div>特防</div><div id="def_base_特防">50</div><input id="def_iv_特防" type="number" min="0" max="31" value="31"><input id="def_ev_特防" type="number" min="0" max="252" step="4" value="0"><select id="def_mul_特防"><option>0.9</option><option selected>1.0</option><option>1.1</option></select><div id="def_fin_特防">0</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>技・補正</h2>
+    <div class="grid four">
+      <label>技<input id="move_name" list="moveNames" placeholder="任意：選ばなくてもOK"></label>
+      <label>威力<input id="move_power" type="number" min="1" max="500" value="80"></label>
+      <label>タイプ<input id="move_type" list="typeList" placeholder="例: ドラゴン"></label>
+      <label>分類<select id="move_cat"><option value="physical">物理</option><option value="special">特殊</option><option value="auto">自動（高い方使用）</option></select></label>
+    </div>
+    <div class="grid four">
+      <label>STAB<select id="stab"><option>1.0</option><option>1.5</option><option>2.0</option></select></label>
+      <label>相性<select id="type_mul"><option>0.25</option><option>0.5</option><option selected>1.0</option><option>2.0</option><option>4.0</option></select></label>
+      <label>天候<select id="weather"><option value="none">なし</option><option value="sun">晴れ</option><option value="rain">雨</option><option value="sand">砂嵐</option><option value="snow">雪</option></select></label>
+      <label>追加補正<input id="extra_mul" type="number" step="0.05" value="1.0"></label>
+    </div>
+    <div class="grid four">
+      <label>攻撃ランク<select id="atk_stage"></select></label>
+      <label>防御ランク<select id="def_stage"></select></label>
+      <label>連続回数<input id="move_hits" type="number" min="1" max="10" value="1"></label>
+      <label>急所<input id="crit" type="checkbox"><span id="crit_force" class="badge" style="display:none;">必ず急所</span></label>
+    </div>
+    <div class="grid three">
+      <label>持ち物<select id="item_mul"><option value="1.0">なし</option><option value="atk1.5">こだわりハチマキ(1.5x)</option><option value="spa1.5">こだわりメガネ(1.5x)</option><option value="lo1.3">いのちのたま(1.3x)</option></select></label>
+      <div class="hint" id="move_hint"></div>
+      <button id="move_clear">技クリア</button>
+    </div>
+    <div class="hpbar"><div id="hpbar_inner"></div></div>
+    <div class="actions">
+      <button id="btn_calc" class="primary">計算する</button>
+      <button id="calc_reset">入力リセット</button>
+    </div>
+    <div id="result" class="result"></div>
+  </div>
+
+  <div class="card">
+    <h3>ステルスロック</h3>
+    <div class="grid two">
+      <label>対いわ相性<select id="sr_vs_rock"><option>0.25</option><option>0.5</option><option selected>1.0</option><option>2.0</option><option>4.0</option></select></label>
+      <button id="sr_apply">適用</button>
+    </div>
+    <div id="sr_info" class="small"></div>
+  </div>
+
+  <div class="card">
+    <h3>計算ログ</h3>
+    <textarea id="atk_logs" rows="8" placeholder="ここに結果が貯まります"></textarea>
+    <div class="actions">
+      <button id="log_copy">コピー</button>
+      <button id="log_clear">クリア</button>
+      <button id="log_export_txt">TXT保存</button>
+      <button id="log_export_csv">CSV保存</button>
+      <input type="file" id="log_import_file" accept=".txt,.csv" style="margin-left:8px;">
+      <button id="log_import_btn">読み込み</button>
+    </div>
+  </div>
+</section>
+
+<section id="tab-1v3" class="tab-pane">
+  <div id="v13-self-mount" class="card"></div>
+  <div id="v13-foes" class="foes-row"></div>
+  <div class="actions"><button id="v13_calc" class="primary">3体へ一括計算</button></div>
+  <div id="v13_out"></div>
+</section>
+
+<section id="tab-party" class="tab-pane">
+  <div class="actions">
+    <input id="partyName" placeholder="保存名（省略可）">
+    <button id="partySave">保存</button>
+    <button id="partyLoad">読み込み</button>
+    <button id="partyClear">クリア</button>
+  </div>
+  <div id="partyGrid" class="grid three"></div>
+</section>
+
+<section id="tab-builds" class="tab-pane">
+  <div class="card">
+    <h2>構築記事（ローカルJSON読み込み）</h2>
+    <input type="file" id="builds_pick" accept=".json">
+    <button id="builds_load">読み込む</button>
+    <div id="builds_list"></div>
+  </div>
+</section>
+
+<section id="tab-diary" class="tab-pane">
+  <div class="card">
+    <h2>対戦ログ（自由メモ）</h2>
+    <div class="grid three">
+      <label>タイトル<input id="diary_title"></label>
+      <label>日付<input id="diary_date" type="date"></label>
+    </div>
+    <textarea id="diary_body" rows="8" placeholder="対戦の内容・反省などを自由に記入"></textarea>
+    <div class="actions">
+      <button id="diary_save">保存</button>
+      <button id="diary_clear">全削除</button>
+      <button id="diary_export_txt">TXT保存</button>
+      <button id="diary_export_csv">CSV保存</button>
+    </div>
+    <div id="diary_list"></div>
+  </div>
+</section>
+
+<!-- datalists -->
+<datalist id="dexNames"></datalist>
+<datalist id="moveNames"></datalist>
+<datalist id="typeList">
+  <option value="ノーマル"><option value="ほのお"><option value="みず"><option value="でんき">
+  <option value="くさ"><option value="こおり"><option value="かくとう"><option value="どく">
+  <option value="じめん"><option value="ひこう"><option value="エスパー"><option value="むし">
+  <option value="いわ"><option value="ゴースト"><option value="ドラゴン"><option value="あく">
+  <option value="はがね"><option value="フェアリー">
+</datalist>
+
+<script src="app.js"></script>
+</body>
+</html>
